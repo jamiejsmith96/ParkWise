@@ -36,21 +36,21 @@ export const PARK_FEATURES = [
 
 // Budget ranges for filters
 export const BUDGET_RANGES = [
-  { label: 'Under £20k', min: 0, max: 20000 },
-  { label: '£20k - £40k', min: 20000, max: 40000 },
-  { label: '£40k - £60k', min: 40000, max: 60000 },
-  { label: '£60k - £80k', min: 60000, max: 80000 },
-  { label: '£80k - £100k', min: 80000, max: 100000 },
-  { label: 'Over £100k', min: 100000, max: 999999 },
+  { label: 'Under £20k', min: 0, max: 20000, description: 'Pre-owned, smaller models' },
+  { label: '£20k - £40k', min: 20000, max: 40000, description: 'Good quality pre-owned caravans' },
+  { label: '£40k - £60k', min: 40000, max: 60000, description: 'Nearly new or mid-range new' },
+  { label: '£60k - £80k', min: 60000, max: 80000, description: 'Premium new caravans' },
+  { label: '£80k - £100k', min: 80000, max: 100000, description: 'Luxury models with extras' },
+  { label: 'Over £100k', min: 100000, max: 999999, description: 'Top-end luxury caravans' },
 ] as const
 
 // Timeline options for lead qualification
 export const TIMELINE_OPTIONS = [
-  { value: 'immediate', label: 'Ready to Buy Now', days: 0 },
-  { value: '1_month', label: 'Within 1 Month', days: 30 },
-  { value: '3_months', label: 'Within 3 Months', days: 90 },
-  { value: '6_months', label: 'Within 6 Months', days: 180 },
-  { value: 'researching', label: 'Just Researching', days: 365 },
+  { value: 'immediate', label: 'Ready to Buy Now', days: 0, description: "I'm ready to make a purchase decision" },
+  { value: '1_month', label: 'Within 1 Month', days: 30, description: 'Looking to buy very soon' },
+  { value: '3_months', label: 'Within 3 Months', days: 90, description: 'Planning to buy this season' },
+  { value: '6_months', label: 'Within 6 Months', days: 180, description: 'Actively searching and comparing' },
+  { value: 'researching', label: 'Just Researching', days: 365, description: 'Early stages, gathering information' },
 ] as const
 
 // Lead status options
