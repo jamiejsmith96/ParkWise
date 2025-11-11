@@ -3,6 +3,8 @@ import { getParkById } from '@/lib/supabase/queries'
 import { DEFAULT_COSTS, DEFAULT_SITE_FEES, FINANCE_RATES } from '@/lib/constants'
 import type { CalculateRequest, CalculateResponse } from '@/types'
 
+export const dynamic = 'force-dynamic'
+
 export async function POST(request: NextRequest) {
   try {
     const body: CalculateRequest = await request.json()

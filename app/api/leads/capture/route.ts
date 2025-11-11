@@ -10,6 +10,8 @@ import {
 import { generateSessionId, parseUTMParams, getDeviceType, getBrowser } from '@/lib/utils'
 import type { LeadCaptureRequest } from '@/types'
 
+export const dynamic = 'force-dynamic'
+
 export async function POST(request: NextRequest) {
   try {
     const body: LeadCaptureRequest = await request.json()

@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createLeadActivity, getLeadByEmail, updateSession } from '@/lib/supabase/queries'
 import type { ActivityTrackRequest } from '@/types'
 
+export const dynamic = 'force-dynamic'
+
 export async function POST(request: NextRequest) {
   try {
     const body: ActivityTrackRequest = await request.json()

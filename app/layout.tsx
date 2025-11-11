@@ -1,11 +1,9 @@
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
 import "./globals.css"
+import { Suspense } from "react"
 import { cn } from "@/lib/utils"
 import { Analytics } from "@/components/tracking/Analytics"
 import Script from "next/script"
-
-const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: "ParkWise - Find Your Perfect Static Caravan",
@@ -57,8 +55,10 @@ export default function RootLayout({
           </Script>
         )}
       </head>
-      <body className={cn(inter.className, "min-h-screen bg-gray-50")}>
-        <Analytics />
+      <body className="min-h-screen bg-gray-50 font-sans antialiased">
+        <Suspense fallback={null}>
+          <Analytics />
+        </Suspense>
         {children}
       </body>
     </html>
