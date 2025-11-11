@@ -361,7 +361,7 @@ export default function LeadDetailPage() {
                   <dd className="font-medium">{formatDate(lead.createdAt)}</dd>
                 </div>
               </dl>
-            </Card>
+            </CardContent>
           </Card>
         </div>
       </div>
