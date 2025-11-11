@@ -72,9 +72,11 @@ export function Header() {
 
           {/* Right Actions */}
           <div className="flex items-center space-x-4">
-            <Button variant="ghost" size="icon" className="hidden sm:flex">
-              <Search className="h-5 w-5" />
-            </Button>
+            <Link href="/parks">
+              <Button variant="ghost" size="icon" className="hidden sm:flex">
+                <Search className="h-5 w-5" />
+              </Button>
+            </Link>
 
             <Link href="/tools/budget-calculator">
               <Button variant="outline" className="hidden lg:flex">
@@ -83,9 +85,11 @@ export function Header() {
               </Button>
             </Link>
 
-            <Button className="hidden sm:inline-flex">
-              Get Started
-            </Button>
+            <Link href="/">
+              <Button className="hidden sm:inline-flex">
+                Get Started
+              </Button>
+            </Link>
 
             {/* Mobile menu button */}
             <Button
@@ -123,9 +127,11 @@ export function Header() {
                 </Link>
               ))}
               <div className="px-4 pt-4 border-t">
-                <Button className="w-full" onClick={() => setMobileMenuOpen(false)}>
-                  Get Started
-                </Button>
+                <Link href="/">
+                  <Button className="w-full" onClick={() => setMobileMenuOpen(false)}>
+                    Get Started
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>

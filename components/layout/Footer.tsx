@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { MapPin, Mail, Phone, Facebook, Twitter, Instagram } from 'lucide-react'
-import { CONTACT_INFO, UK_REGIONS } from '@/lib/constants'
+import { CONTACT_INFO, SOCIAL_LINKS } from '@/lib/constants'
 
 const footerNavigation = {
   parks: [
@@ -51,13 +51,13 @@ export function Footer() {
               Independent comparison site helping you find the perfect static caravan across the UK.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-gray-500">
+              <a href={SOCIAL_LINKS.facebook} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-500">
                 <Facebook className="h-5 w-5" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-gray-500">
+              <a href={SOCIAL_LINKS.twitter} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-500">
                 <Twitter className="h-5 w-5" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-gray-500">
+              <a href={SOCIAL_LINKS.instagram} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-500">
                 <Instagram className="h-5 w-5" />
               </a>
             </div>
