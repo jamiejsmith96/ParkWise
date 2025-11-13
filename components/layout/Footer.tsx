@@ -6,21 +6,28 @@ const footerNavigation = {
   parks: [
     { name: 'Find Parks', href: '/parks' },
     { name: 'Compare Parks', href: '/parks/compare' },
-    { name: 'By Region', href: '/parks?by=region' },
-    { name: 'Featured Parks', href: '/parks?featured=true' },
+    { name: 'Saved Parks', href: '/parks/saved' },
+  ],
+  locations: [
+    { name: 'Cornwall', href: '/parks/location/cornwall' },
+    { name: 'Devon', href: '/parks/location/devon' },
+    { name: 'Lake District', href: '/parks/location/lake-district' },
+    { name: 'Wales', href: '/parks/location/wales' },
+    { name: 'Scotland', href: '/parks/location/scotland' },
+    { name: 'Yorkshire', href: '/parks/location/yorkshire' },
   ],
   tools: [
     { name: 'Budget Calculator', href: '/tools/budget-calculator' },
     { name: 'True Cost Calculator', href: '/tools/true-cost' },
     { name: 'Valuation Tool', href: '/tools/valuation' },
-    { name: 'Finance Guide', href: '/guides/finance' },
   ],
   resources: [
     { name: 'All Guides', href: '/guides' },
     { name: 'Buyers Guide', href: '/guides/buyers-guide' },
-    { name: 'Financing Options', href: '/guides/finance' },
+    { name: 'Finance Guide', href: '/guides/finance' },
     { name: 'Part Exchange', href: '/guides/part-exchange' },
     { name: 'Running Costs', href: '/guides/running-costs' },
+    { name: 'Blog', href: '/blog' },
   ],
   company: [
     { name: 'About Us', href: '/about' },
@@ -39,9 +46,9 @@ export function Footer() {
   return (
     <footer className="border-t bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-2 gap-8 md:grid-cols-5">
+        <div className="grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-6">
           {/* Company Info */}
-          <div className="col-span-2 md:col-span-1">
+          <div className="col-span-2 md:col-span-3 lg:col-span-2">
             <Link href="/" className="flex items-center space-x-2 mb-4">
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-600">
                 <MapPin className="h-5 w-5 text-white" />
@@ -52,13 +59,13 @@ export function Footer() {
               Independent comparison site helping you find the perfect static caravan across the UK.
             </p>
             <div className="flex space-x-4">
-              <a href={SOCIAL_LINKS.facebook} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-500">
+              <a href={SOCIAL_LINKS.facebook} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-500" aria-label="Facebook">
                 <Facebook className="h-5 w-5" />
               </a>
-              <a href={SOCIAL_LINKS.twitter} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-500">
+              <a href={SOCIAL_LINKS.twitter} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-500" aria-label="Twitter">
                 <Twitter className="h-5 w-5" />
               </a>
-              <a href={SOCIAL_LINKS.instagram} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-500">
+              <a href={SOCIAL_LINKS.instagram} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-500" aria-label="Instagram">
                 <Instagram className="h-5 w-5" />
               </a>
             </div>
@@ -78,11 +85,11 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Tools */}
+          {/* Locations */}
           <div>
-            <h3 className="text-sm font-semibold text-gray-900 mb-4">Tools</h3>
+            <h3 className="text-sm font-semibold text-gray-900 mb-4">Locations</h3>
             <ul className="space-y-3">
-              {footerNavigation.tools.map((item) => (
+              {footerNavigation.locations.map((item) => (
                 <li key={item.name}>
                   <Link href={item.href} className="text-sm text-gray-600 hover:text-emerald-600">
                     {item.name}
@@ -106,18 +113,35 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Company */}
-          <div>
-            <h3 className="text-sm font-semibold text-gray-900 mb-4">Company</h3>
-            <ul className="space-y-3">
-              {footerNavigation.company.map((item) => (
-                <li key={item.name}>
-                  <Link href={item.href} className="text-sm text-gray-600 hover:text-emerald-600">
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+          {/* Tools & Company */}
+          <div className="space-y-8">
+            {/* Tools */}
+            <div>
+              <h3 className="text-sm font-semibold text-gray-900 mb-4">Tools</h3>
+              <ul className="space-y-3">
+                {footerNavigation.tools.map((item) => (
+                  <li key={item.name}>
+                    <Link href={item.href} className="text-sm text-gray-600 hover:text-emerald-600">
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Company */}
+            <div>
+              <h3 className="text-sm font-semibold text-gray-900 mb-4">Company</h3>
+              <ul className="space-y-3">
+                {footerNavigation.company.map((item) => (
+                  <li key={item.name}>
+                    <Link href={item.href} className="text-sm text-gray-600 hover:text-emerald-600">
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
 
