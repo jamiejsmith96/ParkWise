@@ -7,11 +7,25 @@ import { StructuredData } from "@/components/seo/StructuredData"
 import { generateMetadata, generateSchema } from "@/lib/seo"
 import Script from "next/script"
 
-export const metadata: Metadata = generateMetadata({
-  title: "Compare Static Caravan Parks UK | Find Your Perfect Holiday Home",
-  description: "Compare 500+ static caravan parks across the UK. Find the best deals on static caravans for sale from £15,000. Independent advice, transparent pricing, and expert guides.",
-  keywords: ["static caravans for sale uk", "compare static caravan parks", "holiday parks uk", "cheap static caravans", "static caravan prices"],
-})
+export const metadata: Metadata = {
+  ...generateMetadata({
+    title: "Compare Static Caravan Parks UK | Find Your Perfect Holiday Home",
+    description: "Compare 500+ static caravan parks across the UK. Find the best deals on static caravans for sale from £15,000. Independent advice, transparent pricing, and expert guides.",
+    keywords: ["static caravans for sale uk", "compare static caravan parks", "holiday parks uk", "cheap static caravans", "static caravan prices"],
+  }),
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: '/icon-192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/icon-512.png', sizes: '512x512', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/apple-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+  },
+  manifest: '/manifest.json',
+}
 
 export default function RootLayout({
   children,
