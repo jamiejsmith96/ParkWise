@@ -587,6 +587,32 @@ export default function LocationPage({ params }: { params: { region: string } })
               </CardContent>
             </Card>
 
+            {/* Browse Other Regions */}
+            <Card className="mb-12">
+              <CardContent className="p-6">
+                <h2 className="text-2xl font-bold mb-6">
+                  Browse Other Regions
+                </h2>
+                <p className="text-gray-700 mb-6">
+                  Explore static caravan parks in other beautiful UK locations to compare options and find your perfect holiday home.
+                </p>
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                  {Object.entries(regions)
+                    .filter(([slug]) => slug !== params.region)
+                    .map(([slug, regionData]) => (
+                      <Link key={slug} href={`/parks/location/${slug}`}>
+                        <Card className="transition-all hover:shadow-lg hover:border-emerald-600 cursor-pointer h-full">
+                          <CardContent className="p-4 flex items-center gap-3">
+                            <MapPin className="h-5 w-5 text-emerald-600 flex-shrink-0" />
+                            <span className="font-medium text-sm">{regionData.name}</span>
+                          </CardContent>
+                        </Card>
+                      </Link>
+                    ))}
+                </div>
+              </CardContent>
+            </Card>
+
             {/* CTA */}
             <div className="text-center p-8 bg-emerald-50 rounded-lg">
               <h3 className="text-2xl font-bold mb-4">

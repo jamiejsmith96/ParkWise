@@ -7,7 +7,7 @@ import Link from 'next/link'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { formatCurrency } from '@/lib/utils'
-import { X, Check, ExternalLink } from 'lucide-react'
+import { X, Check, ExternalLink, Search, Eye, Scale } from 'lucide-react'
 
 export default function ParkCompareContent() {
   const searchParams = useSearchParams()
@@ -103,14 +103,153 @@ export default function ParkCompareContent() {
 
   if (parks.length === 0) {
     return (
-      <div className="container mx-auto px-4 py-20 text-center">
-        <h1 className="text-2xl font-bold mb-4">No Parks to Compare</h1>
-        <p className="text-gray-600 mb-6">
-          Start by browsing parks and adding them to comparison
-        </p>
-        <Link href="/parks">
-          <Button>Browse Parks</Button>
-        </Link>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="max-w-4xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-12">
+            <div className="flex justify-center mb-4">
+              <div className="p-4 bg-emerald-100 rounded-full">
+                <Scale className="h-12 w-12 text-emerald-600" />
+              </div>
+            </div>
+            <h1 className="text-3xl font-bold mb-4">Compare Static Caravan Parks</h1>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Compare up to 4 parks side-by-side to find the perfect match for your needs. See prices, features, and amenities at a glance.
+            </p>
+          </div>
+
+          {/* How it Works */}
+          <Card className="mb-8">
+            <div className="p-8">
+              <h2 className="text-xl font-semibold mb-6 text-center">How to Compare Parks</h2>
+              <div className="grid md:grid-cols-3 gap-8">
+                <div className="text-center">
+                  <div className="flex justify-center mb-4">
+                    <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center">
+                      <Search className="h-6 w-6 text-emerald-600" />
+                    </div>
+                  </div>
+                  <h3 className="font-semibold mb-2">1. Browse Parks</h3>
+                  <p className="text-sm text-gray-600">
+                    Search through 500+ parks across the UK. Filter by location, price, and features.
+                  </p>
+                </div>
+                <div className="text-center">
+                  <div className="flex justify-center mb-4">
+                    <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center">
+                      <Eye className="h-6 w-6 text-emerald-600" />
+                    </div>
+                  </div>
+                  <h3 className="font-semibold mb-2">2. Add to Compare</h3>
+                  <p className="text-sm text-gray-600">
+                    Click "Add to Compare" on any park page. You can add up to 4 parks at once.
+                  </p>
+                </div>
+                <div className="text-center">
+                  <div className="flex justify-center mb-4">
+                    <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center">
+                      <Scale className="h-6 w-6 text-emerald-600" />
+                    </div>
+                  </div>
+                  <h3 className="font-semibold mb-2">3. Compare & Decide</h3>
+                  <p className="text-sm text-gray-600">
+                    View side-by-side comparisons of prices, facilities, rules, and reviews.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </Card>
+
+          {/* What You Can Compare */}
+          <Card className="mb-8">
+            <div className="p-8">
+              <h2 className="text-xl font-semibold mb-4">What You Can Compare</h2>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <h3 className="font-semibold text-emerald-600 mb-3">Costs</h3>
+                  <ul className="space-y-2 text-sm text-gray-700">
+                    <li className="flex items-start">
+                      <Check className="h-4 w-4 text-emerald-600 mr-2 mt-0.5 flex-shrink-0" />
+                      <span>Purchase prices (min & max)</span>
+                    </li>
+                    <li className="flex items-start">
+                      <Check className="h-4 w-4 text-emerald-600 mr-2 mt-0.5 flex-shrink-0" />
+                      <span>Annual site fees</span>
+                    </li>
+                    <li className="flex items-start">
+                      <Check className="h-4 w-4 text-emerald-600 mr-2 mt-0.5 flex-shrink-0" />
+                      <span>Finance and part-exchange availability</span>
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-emerald-600 mb-3">Features & Amenities</h3>
+                  <ul className="space-y-2 text-sm text-gray-700">
+                    <li className="flex items-start">
+                      <Check className="h-4 w-4 text-emerald-600 mr-2 mt-0.5 flex-shrink-0" />
+                      <span>Swimming pool, bar, restaurant</span>
+                    </li>
+                    <li className="flex items-start">
+                      <Check className="h-4 w-4 text-emerald-600 mr-2 mt-0.5 flex-shrink-0" />
+                      <span>Beach access and location</span>
+                    </li>
+                    <li className="flex items-start">
+                      <Check className="h-4 w-4 text-emerald-600 mr-2 mt-0.5 flex-shrink-0" />
+                      <span>Entertainment and facilities</span>
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-emerald-600 mb-3">Park Rules</h3>
+                  <ul className="space-y-2 text-sm text-gray-700">
+                    <li className="flex items-start">
+                      <Check className="h-4 w-4 text-emerald-600 mr-2 mt-0.5 flex-shrink-0" />
+                      <span>Season length (9-12 months)</span>
+                    </li>
+                    <li className="flex items-start">
+                      <Check className="h-4 w-4 text-emerald-600 mr-2 mt-0.5 flex-shrink-0" />
+                      <span>Pet policies</span>
+                    </li>
+                    <li className="flex items-start">
+                      <Check className="h-4 w-4 text-emerald-600 mr-2 mt-0.5 flex-shrink-0" />
+                      <span>Subletting permissions</span>
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-emerald-600 mb-3">Reviews & Ratings</h3>
+                  <ul className="space-y-2 text-sm text-gray-700">
+                    <li className="flex items-start">
+                      <Check className="h-4 w-4 text-emerald-600 mr-2 mt-0.5 flex-shrink-0" />
+                      <span>Overall park ratings</span>
+                    </li>
+                    <li className="flex items-start">
+                      <Check className="h-4 w-4 text-emerald-600 mr-2 mt-0.5 flex-shrink-0" />
+                      <span>Number of verified reviews</span>
+                    </li>
+                    <li className="flex items-start">
+                      <Check className="h-4 w-4 text-emerald-600 mr-2 mt-0.5 flex-shrink-0" />
+                      <span>Customer satisfaction scores</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </Card>
+
+          {/* CTA */}
+          <div className="text-center">
+            <Link href="/parks">
+              <Button size="lg" className="px-8">
+                <Search className="mr-2 h-5 w-5" />
+                Start Browsing Parks
+              </Button>
+            </Link>
+            <p className="text-sm text-gray-500 mt-4">
+              Or explore parks by region: <Link href="/parks/location/cornwall" className="text-emerald-600 hover:underline">Cornwall</Link>, <Link href="/parks/location/devon" className="text-emerald-600 hover:underline">Devon</Link>, <Link href="/parks/location/lake-district" className="text-emerald-600 hover:underline">Lake District</Link>, <Link href="/parks/location/wales" className="text-emerald-600 hover:underline">Wales</Link>
+            </p>
+          </div>
+        </div>
       </div>
     )
   }

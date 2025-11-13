@@ -7,7 +7,8 @@ import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Button } from '@/components/ui/button'
 import { formatCurrency } from '@/lib/utils'
-import { TrendingUp, DollarSign, Calendar } from 'lucide-react'
+import { TrendingUp, DollarSign, Calendar, ArrowRight, FileText, Calculator as CalculatorIcon } from 'lucide-react'
+import Link from 'next/link'
 
 export default function TrueCostCalculatorPage() {
   const [caravanPrice, setCaravanPrice] = useState(35000)
@@ -263,9 +264,43 @@ export default function TrueCostCalculatorPage() {
                   </CardContent>
                 </Card>
 
-                <Button className="w-full" size="lg">
-                  Find Parks in Your Budget
-                </Button>
+                {/* Next Steps */}
+                <Card className="border-emerald-200 bg-emerald-50">
+                  <CardHeader>
+                    <CardTitle className="text-emerald-900">Next Steps</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <p className="text-sm text-emerald-900">
+                      Understanding your true costs helps you make an informed decision. Here's what to do next:
+                    </p>
+                    <div className="space-y-3">
+                      <Link href="/parks">
+                        <Button variant="outline" className="w-full justify-between bg-white hover:bg-emerald-100">
+                          <span>Find Parks Within Your Budget</span>
+                          <ArrowRight className="h-4 w-4" />
+                        </Button>
+                      </Link>
+                      <Link href="/guides/running-costs">
+                        <Button variant="outline" className="w-full justify-between bg-white hover:bg-emerald-100">
+                          <span>Read Full Running Costs Guide</span>
+                          <FileText className="h-4 w-4" />
+                        </Button>
+                      </Link>
+                      <Link href="/tools/budget-calculator">
+                        <Button variant="outline" className="w-full justify-between bg-white hover:bg-emerald-100">
+                          <span>Calculate Finance Payments</span>
+                          <CalculatorIcon className="h-4 w-4" />
+                        </Button>
+                      </Link>
+                      <Link href="/parks/compare">
+                        <Button variant="outline" className="w-full justify-between bg-white hover:bg-emerald-100">
+                          <span>Compare Parks</span>
+                          <ArrowRight className="h-4 w-4" />
+                        </Button>
+                      </Link>
+                    </div>
+                  </CardContent>
+                </Card>
               </>
             )}
           </div>

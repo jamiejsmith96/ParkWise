@@ -15,6 +15,11 @@ const footerNavigation = {
     { name: 'Wales', href: '/parks/location/wales' },
     { name: 'Scotland', href: '/parks/location/scotland' },
     { name: 'Yorkshire', href: '/parks/location/yorkshire' },
+    { name: 'Norfolk', href: '/parks/location/norfolk' },
+    { name: 'Dorset', href: '/parks/location/dorset' },
+    { name: 'Kent', href: '/parks/location/kent' },
+    { name: 'Lincolnshire', href: '/parks/location/lincolnshire' },
+    { name: 'North Wales', href: '/parks/location/north-wales' },
   ],
   tools: [
     { name: 'Budget Calculator', href: '/tools/budget-calculator' },

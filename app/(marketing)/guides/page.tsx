@@ -2,7 +2,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { ArrowRight, BookOpen, Calculator, RefreshCw, PiggyBank } from 'lucide-react'
+import { ArrowRight, BookOpen, Calculator, RefreshCw, PiggyBank, Star } from 'lucide-react'
 import { Breadcrumbs } from '@/components/seo/Breadcrumbs'
 import { generateMetadata as genMeta } from '@/lib/seo'
 
@@ -27,6 +27,8 @@ const guides = [
       'Common mistakes to avoid',
     ],
     readTime: '15 min read',
+    featured: true,
+    gradient: 'from-emerald-500 to-teal-600',
   },
   {
     title: 'Finance Guide',
@@ -42,6 +44,8 @@ const guides = [
       'Early repayment options',
     ],
     readTime: '10 min read',
+    featured: false,
+    gradient: 'from-blue-500 to-cyan-600',
   },
   {
     title: 'Part Exchange Guide',
@@ -57,6 +61,8 @@ const guides = [
       'Tax implications',
     ],
     readTime: '8 min read',
+    featured: false,
+    gradient: 'from-violet-500 to-purple-600',
   },
   {
     title: 'Running Costs Guide',
@@ -72,6 +78,8 @@ const guides = [
       'Cost-saving tips',
     ],
     readTime: '10 min read',
+    featured: false,
+    gradient: 'from-amber-500 to-orange-600',
   },
 ]
 
@@ -121,19 +129,32 @@ export default function GuidesPage() {
               {guides.map((guide) => {
                 const Icon = guide.icon
                 return (
-                  <Card key={guide.href} className="hover:shadow-lg transition-shadow">
-                    <CardHeader>
-                      <div className="flex items-start gap-3 mb-2">
-                        <div className="p-2 bg-emerald-100 rounded-lg">
-                          <Icon className="h-6 w-6 text-emerald-600" />
+                  <Card
+                    key={guide.href}
+                    className={`hover:shadow-lg transition-all overflow-hidden ${
+                      guide.featured ? 'border-emerald-300 shadow-md' : ''
+                    }`}
+                  >
+                    {/* Gradient Header with Icon */}
+                    <div className={`bg-gradient-to-br ${guide.gradient} p-6 relative`}>
+                      {guide.featured && (
+                        <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-1">
+                          <Star className="h-3 w-3 text-amber-500 fill-amber-500" />
+                          <span className="text-xs font-semibold text-gray-900">Most Popular</span>
+                        </div>
+                      )}
+                      <div className="flex items-center gap-3 text-white">
+                        <div className="p-3 bg-white/20 backdrop-blur-sm rounded-lg">
+                          <Icon className="h-8 w-8 text-white" />
                         </div>
                         <div className="flex-1">
-                          <CardTitle className="text-xl mb-1">{guide.title}</CardTitle>
-                          <p className="text-sm text-gray-500">{guide.readTime}</p>
+                          <CardTitle className="text-2xl mb-1 text-white">{guide.title}</CardTitle>
+                          <p className="text-sm text-white/90">{guide.readTime}</p>
                         </div>
                       </div>
-                    </CardHeader>
-                    <CardContent>
+                    </div>
+
+                    <CardContent className="pt-6">
                       <p className="text-gray-700 mb-4">{guide.description}</p>
                       <div className="mb-6">
                         <h4 className="font-semibold text-sm mb-3 text-gray-900">What you'll learn:</h4>
@@ -147,7 +168,7 @@ export default function GuidesPage() {
                         </ul>
                       </div>
                       <Link href={guide.href}>
-                        <Button className="w-full">
+                        <Button className="w-full" size="lg">
                           Read Guide
                           <ArrowRight className="ml-2 h-4 w-4" />
                         </Button>

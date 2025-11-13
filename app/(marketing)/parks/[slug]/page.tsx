@@ -1,26 +1,36 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
+import Link from 'next/link'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { QuickContactForm } from '@/components/forms/QuickContactForm'
-import { MapPin, Star, Phone, Mail, ExternalLink, Heart, Share2 } from 'lucide-react'
+import { Breadcrumbs } from '@/components/seo/Breadcrumbs'
+import { MapPin, Star, Phone, Mail, ExternalLink, Heart, Share2, ArrowLeft } from 'lucide-react'
 import { formatCurrency } from '@/lib/utils'
 
 export default function ParkDetailPage() {
   const params = useParams()
+  const router = useRouter()
   const slug = params.slug as string
 
   const [park, setPark] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [saved, setSaved] = useState(false)
+  const [similarParks, setSimilarParks] = useState<any[]>([])
 
   useEffect(() => {
     fetchPark()
   }, [slug])
+
+  useEffect(() => {
+    if (park) {
+      fetchSimilarParks()
+    }
+  }, [park])
 
   const fetchPark = async () => {
     try {
@@ -34,6 +44,23 @@ export default function ParkDetailPage() {
       console.error('Failed to fetch park:', error)
     } finally {
       setLoading(false)
+    }
+  }
+
+  const fetchSimilarParks = async () => {
+    try {
+      // Fetch parks in same region with similar price range
+      const response = await fetch(`/api/parks?region=${park.location.region}&limit=4`)
+      const data = await response.json()
+
+      // Filter out current park and get up to 3 similar parks
+      const similar = data.parks
+        ?.filter((p: any) => p.slug !== slug)
+        .slice(0, 3) || []
+
+      setSimilarParks(similar)
+    } catch (error) {
+      console.error('Failed to fetch similar parks:', error)
     }
   }
 
@@ -109,6 +136,27 @@ export default function ParkDetailPage() {
 
   return (
     <div className="bg-gray-50">
+      {/* Breadcrumbs */}
+      <Breadcrumbs
+        items={[
+          { name: 'Parks', url: '/parks' },
+          { name: park.location?.county || park.location?.region || 'Location', url: `/parks?region=${park.location?.region?.toLowerCase()}` },
+          { name: park.name, url: `/parks/${slug}` }
+        ]}
+      />
+
+      {/* Back Button */}
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+        <Button
+          variant="ghost"
+          onClick={() => router.back()}
+          className="mb-4"
+        >
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          Back to Search
+        </Button>
+      </div>
+
       {/* Image Gallery */}
       <div className="relative h-96 bg-gray-200">
         <Image
@@ -303,6 +351,51 @@ export default function ParkDetailPage() {
             </div>
           </div>
         </div>
+
+        {/* Similar Parks Section */}
+        {similarParks.length > 0 && (
+          <div className="mt-12 pb-12">
+            <h2 className="text-2xl font-bold mb-6">Similar Parks You Might Like</h2>
+            <div className="grid md:grid-cols-3 gap-6">
+              {similarParks.map((similarPark: any) => (
+                <Link key={similarPark.slug} href={`/parks/${similarPark.slug}`}>
+                  <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full">
+                    <div className="relative h-48 bg-gray-200">
+                      <Image
+                        src={similarPark.images?.[0]?.url || '/placeholder-park.jpg'}
+                        alt={similarPark.name}
+                        fill
+                        className="object-cover rounded-t-lg"
+                      />
+                    </div>
+                    <CardContent className="p-4">
+                      <h3 className="font-semibold text-lg mb-2">{similarPark.name}</h3>
+                      <div className="flex items-center text-sm text-gray-600 mb-3">
+                        <MapPin className="h-4 w-4 mr-1" />
+                        <span>{similarPark.location?.region || similarPark.location?.county}</span>
+                      </div>
+                      {similarPark.reviews?.rating > 0 && (
+                        <div className="flex items-center mb-3">
+                          <Star className="h-4 w-4 text-yellow-400 fill-current" />
+                          <span className="ml-1 text-sm font-medium">{similarPark.reviews.rating}</span>
+                          <span className="ml-1 text-sm text-gray-500">
+                            ({similarPark.reviews.count})
+                          </span>
+                        </div>
+                      )}
+                      <div className="pt-3 border-t">
+                        <p className="text-sm text-gray-600">From</p>
+                        <p className="text-xl font-bold text-emerald-600">
+                          {formatCurrency(similarPark.prices?.min || 0)}
+                        </p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )

@@ -7,7 +7,8 @@ import { Input } from '@/components/ui/input'
 import { Slider } from '@/components/ui/slider'
 import { Button } from '@/components/ui/button'
 import { formatCurrency } from '@/lib/utils'
-import { Calculator, TrendingUp, AlertCircle } from 'lucide-react'
+import { Calculator, TrendingUp, AlertCircle, ArrowRight, FileText } from 'lucide-react'
+import Link from 'next/link'
 
 export default function BudgetCalculatorPage() {
   const [values, setValues] = useState({
@@ -371,6 +372,44 @@ export default function BudgetCalculatorPage() {
                   <li>✓ Negotiate on price and annual fee increases</li>
                   <li>✓ Get quotes from multiple insurance providers</li>
                 </ul>
+              </CardContent>
+            </Card>
+
+            {/* Next Steps */}
+            <Card className="border-emerald-200 bg-emerald-50">
+              <CardHeader>
+                <CardTitle className="text-emerald-900">Next Steps</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <p className="text-sm text-emerald-900">
+                  Now that you know your budget, here's how to move forward:
+                </p>
+                <div className="space-y-3">
+                  <Link href="/parks">
+                    <Button variant="outline" className="w-full justify-between bg-white hover:bg-emerald-100">
+                      <span>Browse Parks Within Your Budget</span>
+                      <ArrowRight className="h-4 w-4" />
+                    </Button>
+                  </Link>
+                  <Link href="/guides/finance">
+                    <Button variant="outline" className="w-full justify-between bg-white hover:bg-emerald-100">
+                      <span>Learn About Finance Options</span>
+                      <FileText className="h-4 w-4" />
+                    </Button>
+                  </Link>
+                  <Link href="/tools/true-cost">
+                    <Button variant="outline" className="w-full justify-between bg-white hover:bg-emerald-100">
+                      <span>Calculate Long-Term Costs</span>
+                      <Calculator className="h-4 w-4" />
+                    </Button>
+                  </Link>
+                  <Link href="/contact">
+                    <Button variant="outline" className="w-full justify-between bg-white hover:bg-emerald-100">
+                      <span>Get Expert Advice</span>
+                      <ArrowRight className="h-4 w-4" />
+                    </Button>
+                  </Link>
+                </div>
               </CardContent>
             </Card>
           </div>
