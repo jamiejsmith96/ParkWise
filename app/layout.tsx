@@ -3,13 +3,15 @@ import "./globals.css"
 import { Suspense } from "react"
 import { cn } from "@/lib/utils"
 import { Analytics } from "@/components/tracking/Analytics"
+import { StructuredData } from "@/components/seo/StructuredData"
+import { generateMetadata, generateSchema } from "@/lib/seo"
 import Script from "next/script"
 
-export const metadata: Metadata = {
-  title: "ParkWise - Find Your Perfect Static Caravan",
-  description: "Compare holiday parks across the UK and find your dream static caravan. Independent advice, best deals, and expert guidance.",
-  keywords: ["static caravan", "holiday park", "caravan sales", "UK holiday homes", "caravan finance"],
-}
+export const metadata: Metadata = generateMetadata({
+  title: "Compare Static Caravan Parks UK | Find Your Perfect Holiday Home",
+  description: "Compare 500+ static caravan parks across the UK. Find the best deals on static caravans for sale from £15,000. Independent advice, transparent pricing, and expert guides.",
+  keywords: ["static caravans for sale uk", "compare static caravan parks", "holiday parks uk", "cheap static caravans", "static caravan prices"],
+})
 
 export default function RootLayout({
   children,
@@ -19,6 +21,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        {/* Structured Data - Organization & WebSite */}
+        <StructuredData data={generateSchema('Organization', null)} />
+        <StructuredData data={generateSchema('WebSite', null)} />
+
         {/* Google Analytics */}
         {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
           <>
