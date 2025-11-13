@@ -1,30 +1,71 @@
 import Link from 'next/link'
+import type { Metadata } from 'next'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Calculator, CheckCircle, AlertCircle } from 'lucide-react'
+import { Calculator, CheckCircle, AlertCircle, HelpCircle, ArrowRight } from 'lucide-react'
+import { Breadcrumbs } from '@/components/seo/Breadcrumbs'
+import { StructuredData } from '@/components/seo/StructuredData'
+import { generateMetadata as genMeta, generateSchema } from '@/lib/seo'
 
-export const metadata = {
-  title: 'Static Caravan Finance Guide | ParkWise',
-  description: 'Complete guide to financing a static caravan. Learn about loan options, interest rates, and how to get the best deal.',
-}
+export const metadata: Metadata = genMeta({
+  title: 'Static Caravan Finance Guide 2025 | Loans, Deals & Options',
+  description: 'Compare static caravan finance options. Dealer finance, personal loans, and secured loans explained. Get the best rates and repayment terms.',
+  keywords: ['static caravan finance', 'caravan loans', 'static caravan payment plans', 'caravan finance deals'],
+})
+
+// FAQ Data for Schema
+const faqs = [
+  {
+    question: 'What credit score do I need for static caravan finance?',
+    answer: 'For the best rates (6.9-9.9% APR), you typically need an excellent credit score of 750+. Good credit (700-749) gets 9.9-12.9% APR, fair credit (650-699) gets 12.9-16.9%, and poor credit (under 650) may get 16.9-24.9% or be declined. Some specialist lenders cater to lower credit scores but charge higher rates.',
+  },
+  {
+    question: 'Can I get finance with bad credit?',
+    answer: 'Yes, but it will be more expensive. Options include: specialist bad credit lenders (expect 18-25% APR), dealer finance through parks (may be more flexible), or secured loans against your home (lower rates but higher risk). Consider improving your credit score first, paying off debts, or saving a larger deposit to improve your chances.',
+  },
+  {
+    question: 'How much deposit do I need for static caravan finance?',
+    answer: 'Typical deposits range from 10-30% of the caravan price. A 10-15% deposit is minimum for most lenders, 20-30% will get you better interest rates and lower monthly payments. For a £50,000 caravan, expect to pay £5,000-£15,000 upfront. Larger deposits significantly reduce the total interest you\'ll pay over the loan term.',
+  },
+  {
+    question: 'What\'s better - dealer finance or bank loan?',
+    answer: 'Bank/personal loans often offer lower interest rates (5-10% APR) if you have good credit, give you stronger negotiating position as cash buyer, and have no dealer markup. Dealer finance offers convenience (one-stop shopping), quick approval, and sometimes special promotional rates. Always compare both options - the best deal depends on your credit score and the specific offers available.',
+  },
+  {
+    question: 'Can I pay off my static caravan loan early?',
+    answer: 'Most static caravan loans allow early repayment, but many charge early repayment fees (typically 1-2 months\' interest). Always check the loan agreement before signing. Some lenders offer penalty-free early repayment after a certain period. Calculate whether paying off early saves you money after fees - use our budget calculator to compare scenarios.',
+  },
+  {
+    question: 'How long can I finance a static caravan for?',
+    answer: 'Static caravan finance terms typically range from 5-10 years. Shorter terms (5-7 years) mean higher monthly payments but much less interest paid overall. Longer terms (8-10 years) reduce monthly payments but significantly increase total interest. Most lenders won\'t finance beyond the caravan\'s expected lifespan - a 15-year-old caravan might only get a 5-year loan.',
+  },
+]
 
 export default function FinanceGuidePage() {
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
-              Static Caravan Finance Guide
-            </h1>
-            <p className="text-xl text-gray-600">
-              Everything you need to know about financing your holiday home
-            </p>
-          </div>
+    <>
+      <StructuredData data={generateSchema('FAQPage', faqs)} />
+      <Breadcrumbs
+        items={[
+          { name: 'Guides', url: '/guides' },
+          { name: 'Finance Guide', url: '/guides/finance' },
+        ]}
+      />
+      <div className="min-h-screen bg-gray-50 py-12">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <h1 className="text-4xl font-bold text-gray-900 mb-4">
+                Static Caravan Finance Guide
+              </h1>
+              <p className="text-xl text-gray-600">
+                Everything you need to know about financing your holiday home
+              </p>
+            </div>
 
-          <div className="space-y-8">
-            {/* Finance Types */}
-            <Card>
+            <div className="space-y-8">
+              {/* Finance Types */}
+              <Card>
               <CardHeader>
                 <CardTitle>Finance Options</CardTitle>
               </CardHeader>
@@ -249,6 +290,38 @@ export default function FinanceGuidePage() {
               </CardContent>
             </Card>
 
+            {/* FAQ Section */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Frequently Asked Questions</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-6">
+                  {faqs.map((faq, index) => (
+                    <details
+                      key={index}
+                      className="group border-b border-gray-200 pb-4 last:border-b-0 last:pb-0"
+                    >
+                      <summary className="cursor-pointer list-none">
+                        <div className="flex items-start justify-between gap-4">
+                          <div className="flex items-start gap-3">
+                            <HelpCircle className="h-5 w-5 text-emerald-600 mt-0.5 flex-shrink-0" />
+                            <h3 className="font-semibold text-gray-900 group-open:text-emerald-600 transition-colors">
+                              {faq.question}
+                            </h3>
+                          </div>
+                          <ArrowRight className="h-5 w-5 text-gray-400 transform group-open:rotate-90 transition-transform flex-shrink-0 mt-0.5" />
+                        </div>
+                      </summary>
+                      <div className="mt-3 ml-8 text-gray-700 leading-relaxed">
+                        {faq.answer}
+                      </div>
+                    </details>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
             {/* CTA */}
             <Card className="bg-gradient-to-br from-emerald-600 to-blue-600 text-white">
               <CardContent className="p-8 text-center">
@@ -270,9 +343,10 @@ export default function FinanceGuidePage() {
                 </div>
               </CardContent>
             </Card>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }

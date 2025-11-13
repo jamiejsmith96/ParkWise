@@ -1,33 +1,70 @@
 import Link from 'next/link'
+import type { Metadata } from 'next'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { RefreshCw, CheckCircle, XCircle, Calculator } from 'lucide-react'
+import { RefreshCw, CheckCircle, XCircle, Calculator, HelpCircle, ArrowRight } from 'lucide-react'
+import { Breadcrumbs } from '@/components/seo/Breadcrumbs'
+import { StructuredData } from '@/components/seo/StructuredData'
+import { generateMetadata as genMeta, generateSchema } from '@/lib/seo'
 
-export const metadata = {
-  title: 'Part Exchange Guide | ParkWise',
-  description: 'Complete guide to part-exchanging your static caravan. Learn how it works, valuations, and tips for getting the best deal.',
-}
+export const metadata: Metadata = genMeta({
+  title: 'Static Caravan Part Exchange | Ultimate Guide 2025',
+  description: 'How to part exchange your static caravan. Valuation tips, maximizing trade-in value, and what affects caravan prices. Expert guidance.',
+  keywords: ['static caravan part exchange', 'trade in static caravan', 'caravan valuation', 'sell static caravan'],
+})
+
+// FAQ Data for Schema
+const faqs = [
+  {
+    question: 'How is part exchange value calculated?',
+    answer: 'Part exchange value is based on several factors: age and condition of your caravan, current market demand, location and desirability of the park, quality of fixtures and fittings, any upgrades or improvements made, and comparison to similar caravans for sale. Dealers typically offer 10-20% less than private sale prices because they need to make a profit when reselling and factor in reconditioning costs.',
+  },
+  {
+    question: 'Should I part exchange or sell privately?',
+    answer: 'Part exchange is best if: you value convenience over maximum money, your caravan is in average condition, you don\'t want the hassle of advertising and viewings, or the dealer offers a fair price. Sell privately if: you have time and patience, your caravan is in excellent condition, the part exchange offer is very low, or you could get £3,000-£5,000+ more privately. Consider that private sales can take 2-6 months.',
+  },
+  {
+    question: 'Can I part exchange a caravan with damp?',
+    answer: 'Yes, but the value will be significantly reduced. Minor damp might reduce value by £2,000-£5,000. Major damp issues could reduce value by £5,000-£10,000+ or make it unsellable. Some dealers won\'t accept caravans with serious damp. Be honest about damp - dealers will inspect thoroughly. Getting professional damp treatment before part exchange might increase value more than it costs.',
+  },
+  {
+    question: 'Do I pay tax on part exchange?',
+    answer: 'No, in the UK there is no capital gains tax or VAT payable on part-exchanging a static caravan used for personal holidays. You only pay tax on the difference between your part exchange value and the new caravan price. For example: if your £30,000 trade-in is worth £30,000 and your new caravan costs £70,000, you only pay £40,000. This is one advantage over selling privately then buying separately.',
+  },
+  {
+    question: 'How can I maximize my part exchange value?',
+    answer: 'Deep clean inside and out (professional valet recommended), fix minor issues (broken handles, cracked seals, scuffed walls), provide all service records and gas certificates, time it right (spring/summer is peak demand), get multiple dealer valuations to compare, negotiate new caravan price separately from trade-in value, and present your caravan well - first impressions matter significantly.',
+  },
+]
 
 export default function PartExchangeGuidePage() {
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-emerald-100 rounded-full mb-4">
-              <RefreshCw className="h-8 w-8 text-emerald-600" />
+    <>
+      <StructuredData data={generateSchema('FAQPage', faqs)} />
+      <Breadcrumbs
+        items={[
+          { name: 'Guides', url: '/guides' },
+          { name: 'Part Exchange', url: '/guides/part-exchange' },
+        ]}
+      />
+      <div className="min-h-screen bg-gray-50 py-12">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-emerald-100 rounded-full mb-4">
+                <RefreshCw className="h-8 w-8 text-emerald-600" />
+              </div>
+              <h1 className="text-4xl font-bold text-gray-900 mb-4">
+                Part Exchange Guide
+              </h1>
+              <p className="text-xl text-gray-600">
+                Trade in your current caravan towards a new one
+              </p>
             </div>
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
-              Part Exchange Guide
-            </h1>
-            <p className="text-xl text-gray-600">
-              Trade in your current caravan towards a new one
-            </p>
-          </div>
 
-          <div className="space-y-8">
-            {/* How it Works */}
-            <Card>
+            <div className="space-y-8">
+              {/* How it Works */}
+              <Card>
               <CardHeader>
                 <CardTitle>How Part Exchange Works</CardTitle>
               </CardHeader>
@@ -307,6 +344,38 @@ export default function PartExchangeGuidePage() {
               </CardContent>
             </Card>
 
+            {/* FAQ Section */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Frequently Asked Questions</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-6">
+                  {faqs.map((faq, index) => (
+                    <details
+                      key={index}
+                      className="group border-b border-gray-200 pb-4 last:border-b-0 last:pb-0"
+                    >
+                      <summary className="cursor-pointer list-none">
+                        <div className="flex items-start justify-between gap-4">
+                          <div className="flex items-start gap-3">
+                            <HelpCircle className="h-5 w-5 text-emerald-600 mt-0.5 flex-shrink-0" />
+                            <h3 className="font-semibold text-gray-900 group-open:text-emerald-600 transition-colors">
+                              {faq.question}
+                            </h3>
+                          </div>
+                          <ArrowRight className="h-5 w-5 text-gray-400 transform group-open:rotate-90 transition-transform flex-shrink-0 mt-0.5" />
+                        </div>
+                      </summary>
+                      <div className="mt-3 ml-8 text-gray-700 leading-relaxed">
+                        {faq.answer}
+                      </div>
+                    </details>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
             {/* CTA */}
             <Card className="bg-gradient-to-br from-emerald-600 to-blue-600 text-white">
               <CardContent className="p-8 text-center">
@@ -328,9 +397,10 @@ export default function PartExchangeGuidePage() {
                 </div>
               </CardContent>
             </Card>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
