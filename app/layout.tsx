@@ -16,16 +16,36 @@ export const metadata: Metadata = {
   }),
   icons: {
     icon: [
-      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon.svg', type: 'image/svg+xml' },
       { url: '/icon.svg', type: 'image/svg+xml' },
-      { url: '/icon-192.png', sizes: '192x192', type: 'image/png' },
-      { url: '/icon-512.png', sizes: '512x512', type: 'image/png' },
     ],
     apple: [
-      { url: '/apple-icon.png', sizes: '180x180', type: 'image/png' },
+      { url: '/apple-icon.svg', type: 'image/svg+xml', sizes: '180x180' },
     ],
   },
   manifest: '/manifest.json',
+  openGraph: {
+    type: 'website',
+    locale: 'en_GB',
+    url: 'https://parkwise.co.uk',
+    siteName: 'ParkWise',
+    title: 'ParkWise - Compare Static Caravan Parks UK',
+    description: 'Compare 500+ static caravan parks across the UK. Find the best deals on static caravans for sale from £15,000.',
+    images: [
+      {
+        url: '/og-image.svg',
+        width: 1200,
+        height: 630,
+        alt: 'ParkWise - Compare Static Caravan Parks',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'ParkWise - Compare Static Caravan Parks UK',
+    description: 'Compare 500+ static caravan parks across the UK. Find the best deals on static caravans for sale from £15,000.',
+    images: ['/og-image.svg'],
+  },
 }
 
 export default function RootLayout({

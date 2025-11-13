@@ -1,0 +1,8 @@
+<svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Rounded emerald background (Apple prefers no radius, they apply their own mask) -->
+  <rect width="180" height="180" fill="#059669"/>
+
+  <!-- MapPin icon (from Lucide) in white, centered and scaled -->
+  <path d="M90 101.25C99.6649 101.25 107.5 93.4149 107.5 83.75C107.5 74.0851 99.6649 66.25 90 66.25C80.3351 66.25 72.5 74.0851 72.5 83.75C72.5 93.4149 80.3351 101.25 90 101.25Z" stroke="white" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M90 38.75C77.5942 38.75 65.6989 43.6808 56.8128 52.567C47.9266 61.4531 43 73.3484 43 85.75C43 96.25 43 106.75 90 141.25C137 106.75 137 96.25 137 85.75C137 73.3484 132.073 61.4531 123.187 52.567C114.301 43.6808 102.406 38.75 90 38.75Z" stroke="white" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

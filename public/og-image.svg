@@ -1,0 +1,52 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Gradient background (emerald to blue, matching site gradient) -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#059669;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0284c7;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bgGradient)"/>
+
+  <!-- Icon container - centered left -->
+  <g transform="translate(200, 215)">
+    <rect width="200" height="200" rx="40" fill="white" fill-opacity="0.15"/>
+    <rect width="200" height="200" rx="40" stroke="white" stroke-width="4" fill="none"/>
+
+    <!-- MapPin icon scaled up -->
+    <path d="M100 125C118.778 125 134 109.778 134 91C134 72.2223 118.778 57 100 57C81.2223 57 66 72.2223 66 91C66 109.778 81.2223 125 100 125Z" stroke="white" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M100 32C76.8043 32 54.6413 41.2142 38.5137 57.3416C22.3858 73.4691 13.1719 95.632 13.1719 118.828C13.1719 137 13.1719 155 100 195C186.828 155 186.828 137 186.828 118.828C186.828 95.632 177.614 73.4691 161.486 57.3416C145.359 41.2142 123.196 32 100 32Z" stroke="white" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Text content - centered right -->
+  <g transform="translate(480, 0)">
+    <!-- Main title -->
+    <text x="0" y="250" fill="white" font-family="system-ui, -apple-system, sans-serif" font-size="72" font-weight="bold">
+      ParkWise
+    </text>
+
+    <!-- Subtitle -->
+    <text x="0" y="320" fill="white" fill-opacity="0.95" font-family="system-ui, -apple-system, sans-serif" font-size="36" font-weight="500">
+      Compare Static Caravan Parks
+    </text>
+
+    <!-- Description -->
+    <text x="0" y="380" fill="white" fill-opacity="0.85" font-family="system-ui, -apple-system, sans-serif" font-size="28">
+      500+ parks across the UK
+    </text>
+  </g>
+
+  <!-- Decorative dots pattern (bottom right) -->
+  <g opacity="0.15">
+    <circle cx="1000" cy="500" r="8" fill="white"/>
+    <circle cx="1040" cy="500" r="8" fill="white"/>
+    <circle cx="1080" cy="500" r="8" fill="white"/>
+    <circle cx="1000" cy="540" r="8" fill="white"/>
+    <circle cx="1040" cy="540" r="8" fill="white"/>
+    <circle cx="1080" cy="540" r="8" fill="white"/>
+    <circle cx="1000" cy="580" r="8" fill="white"/>
+    <circle cx="1040" cy="580" r="8" fill="white"/>
+    <circle cx="1080" cy="580" r="8" fill="white"/>
+  </g>
+</svg>

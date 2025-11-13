@@ -1,0 +1,8 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Rounded emerald background -->
+  <rect width="64" height="64" rx="12" fill="#059669"/>
+
+  <!-- MapPin icon (from Lucide) in white, centered and scaled -->
+  <path d="M32 36C35.3137 36 38 33.3137 38 30C38 26.6863 35.3137 24 32 24C28.6863 24 26 26.6863 26 30C26 33.3137 28.6863 36 32 36Z" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M32 14C27.7565 14 23.6869 15.6857 20.6863 18.6863C17.6857 21.6869 16 25.7565 16 30C16 34 16 38 32 50C48 38 48 34 48 30C48 25.7565 46.3143 21.6869 43.3137 18.6863C40.3131 15.6857 36.2435 14 32 14Z" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
