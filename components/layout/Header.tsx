@@ -10,11 +10,13 @@ import { useSavedParks } from '@/hooks/useSavedParks'
 
 const navigation = [
   { name: 'Find Parks', href: '/parks' },
-  { name: 'Compare', href: '/parks/compare' },
+  { name: 'Guides', href: '/guides' },
   { name: 'Saved', href: '/parks/saved' },
   { name: 'Budget Calculator', href: '/tools/budget-calculator' },
   { name: 'True Cost', href: '/tools/true-cost' },
   { name: 'Valuation', href: '/tools/valuation' },
+  { name: 'About', href: '/about' },
+  { name: 'How It Works', href: '/how-it-works' },
 ]
 
 export function Header() {
@@ -37,14 +39,14 @@ export function Header() {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex md:items-center md:space-x-8">
+          <div className="hidden md:flex md:items-center md:space-x-6">
             {navigation.slice(0, 3).map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
                 className={cn(
                   "text-sm font-medium transition-colors hover:text-emerald-600 flex items-center gap-1.5",
-                  pathname === item.href
+                  pathname === item.href || (item.href === '/guides' && pathname?.startsWith('/guides'))
                     ? "text-emerald-600"
                     : "text-gray-700"
                 )}
@@ -58,15 +60,38 @@ export function Header() {
                 )}
               </Link>
             ))}
+
+            {/* Tools Dropdown */}
             <div className="relative group">
               <button className="text-sm font-medium text-gray-700 hover:text-emerald-600 flex items-center">
-                Calculators
+                Tools
                 <svg className="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
-              <div className="absolute left-0 mt-2 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 bg-white rounded-lg shadow-lg border py-2">
-                {navigation.slice(3).map((item) => (
+              <div className="absolute left-0 mt-2 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 bg-white rounded-lg shadow-lg border py-2 z-50">
+                {navigation.slice(3, 6).map((item) => (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-600"
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* Company Dropdown */}
+            <div className="relative group">
+              <button className="text-sm font-medium text-gray-700 hover:text-emerald-600 flex items-center">
+                Company
+                <svg className="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              <div className="absolute left-0 mt-2 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 bg-white rounded-lg shadow-lg border py-2 z-50">
+                {navigation.slice(6).map((item) => (
                   <Link
                     key={item.name}
                     href={item.href}

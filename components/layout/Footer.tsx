@@ -16,6 +16,7 @@ const footerNavigation = {
     { name: 'Finance Guide', href: '/guides/finance' },
   ],
   resources: [
+    { name: 'All Guides', href: '/guides' },
     { name: 'Buyers Guide', href: '/guides/buyers-guide' },
     { name: 'Financing Options', href: '/guides/finance' },
     { name: 'Part Exchange', href: '/guides/part-exchange' },
