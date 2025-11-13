@@ -9,11 +9,21 @@ import {
 } from '@/lib/supabase/queries'
 import { generateSessionId, parseUTMParams, getDeviceType, getBrowser } from '@/lib/utils'
 import { sendWelcomeEmail } from '@/lib/email'
+import { validateEmail, validatePhone, validateName, sanitizeInput } from '@/lib/validation'
+import { rateLimitPresets, rateLimit } from '@/lib/rate-limit'
 import type { LeadCaptureRequest } from '@/types'
 
 export const dynamic = 'force-dynamic'
 
+// Apply rate limiting
+const limiter = rateLimit(rateLimitPresets.form)
+
 export async function POST(request: NextRequest) {
+  // Check rate limit
+  const limitResponse = await limiter(request)
+  if (limitResponse) {
+    return limitResponse
+  }
   try {
     const body: LeadCaptureRequest = await request.json()
     const {
@@ -44,8 +54,19 @@ export async function POST(request: NextRequest) {
 
     // Stage 1: Email capture
     if (stage === 'email' && email) {
+      // Validate and sanitize email
+      const emailValidation = validateEmail(email)
+      if (!emailValidation.isValid) {
+        return NextResponse.json(
+          { error: emailValidation.error },
+          { status: 400 }
+        )
+      }
+
+      const sanitizedEmail = sanitizeInput(email.toLowerCase().trim())
+
       // Check if lead already exists
-      const existingLead = await getLeadByEmail(email)
+      const existingLead = await getLeadByEmail(sanitizedEmail)
 
       if (existingLead) {
         leadId = existingLead.id
@@ -55,11 +76,11 @@ export async function POST(request: NextRequest) {
       } else {
         // Create new lead
         const newLead = await createLead({
-          email,
+          email: sanitizedEmail,
           email_verified: false,
-          source,
-          medium,
-          campaign,
+          source: source ? sanitizeInput(source) : undefined,
+          medium: medium ? sanitizeInput(medium) : undefined,
+          campaign: campaign ? sanitizeInput(campaign) : undefined,
           landing_page: request.headers.get('referer') || undefined,
           ip_address: ip,
           user_agent: userAgent,
@@ -73,7 +94,7 @@ export async function POST(request: NextRequest) {
 
         // Create email capture record
         await createEmailCapture({
-          email,
+          email: sanitizedEmail,
           lead_id: leadId,
           capture_point: 'value_exchange',
           capture_page: request.headers.get('referer') || undefined,
@@ -126,11 +147,42 @@ export async function POST(request: NextRequest) {
 
     // Stage 3: Contact details
     if (stage === 'contact') {
+      // Validate inputs
+      if (firstName) {
+        const nameValidation = validateName(firstName, 'First name')
+        if (!nameValidation.isValid) {
+          return NextResponse.json(
+            { error: nameValidation.error },
+            { status: 400 }
+          )
+        }
+      }
+
+      if (lastName) {
+        const nameValidation = validateName(lastName, 'Last name')
+        if (!nameValidation.isValid) {
+          return NextResponse.json(
+            { error: nameValidation.error },
+            { status: 400 }
+          )
+        }
+      }
+
+      if (phone) {
+        const phoneValidation = validatePhone(phone)
+        if (!phoneValidation.isValid) {
+          return NextResponse.json(
+            { error: phoneValidation.error },
+            { status: 400 }
+          )
+        }
+      }
+
       const updates: any = {}
 
-      if (firstName) updates.first_name = firstName
-      if (lastName) updates.last_name = lastName
-      if (phone) updates.phone = phone
+      if (firstName) updates.first_name = sanitizeInput(firstName)
+      if (lastName) updates.last_name = sanitizeInput(lastName)
+      if (phone) updates.phone = sanitizeInput(phone)
 
       if (email) {
         const lead = await getLeadByEmail(email)
