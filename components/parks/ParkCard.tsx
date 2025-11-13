@@ -5,7 +5,8 @@ import Image from 'next/image'
 import { Card, CardContent, CardFooter } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { MapPin, Star, Heart, ArrowRight } from 'lucide-react'
+import { MapPin, Star, ArrowRight } from 'lucide-react'
+import { SaveParkButton } from './SaveParkButton'
 import { formatCurrency } from '@/lib/utils'
 
 interface ParkCardProps {
@@ -23,11 +24,9 @@ interface ParkCardProps {
     features: string[]
     distance?: number
   }
-  onSave?: (parkId: string) => void
-  saved?: boolean
 }
 
-export function ParkCard({ park, onSave, saved = false }: ParkCardProps) {
+export function ParkCard({ park }: ParkCardProps) {
   return (
     <Card className="overflow-hidden hover:shadow-lg transition-shadow">
       {/* Image */}
@@ -38,18 +37,12 @@ export function ParkCard({ park, onSave, saved = false }: ParkCardProps) {
           fill
           className="object-cover"
         />
-        {onSave && (
-          <button
-            onClick={() => onSave(park.id)}
-            className={`absolute top-3 right-3 p-2 rounded-full backdrop-blur-sm ${
-              saved
-                ? 'bg-emerald-600 text-white'
-                : 'bg-white/80 text-gray-600 hover:bg-white'
-            }`}
-          >
-            <Heart className={`h-5 w-5 ${saved ? 'fill-current' : ''}`} />
-          </button>
-        )}
+        <div className="absolute top-3 right-3">
+          <SaveParkButton
+            parkId={park.id}
+            className="bg-white/90 hover:bg-white backdrop-blur-sm"
+          />
+        </div>
         {park.distance && (
           <div className="absolute bottom-3 left-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full text-xs font-medium">
             {park.distance.toFixed(1)} miles away

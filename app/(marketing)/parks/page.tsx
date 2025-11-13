@@ -22,7 +22,6 @@ export default function ParksPage() {
   const [parks, setParks] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [total, setTotal] = useState(0)
-  const [savedParks, setSavedParks] = useState<Set<string>>(new Set())
 
   const [filters, setFilters] = useState<FilterState>({
     features: [],
@@ -64,40 +63,6 @@ export default function ParksPage() {
     } finally {
       setLoading(false)
     }
-  }
-
-  const handleSavePark = (parkId: string) => {
-    setSavedParks(prev => {
-      const newSet = new Set(prev)
-      if (newSet.has(parkId)) {
-        newSet.delete(parkId)
-      } else {
-        newSet.add(parkId)
-      }
-      return newSet
-    })
-
-    // Track activity
-    fetch('/api/leads/activity', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        sessionId: getSessionId(),
-        activities: [{
-          type: 'park_save',
-          parkId,
-        }],
-      }),
-    })
-  }
-
-  const getSessionId = () => {
-    let sessionId = localStorage.getItem('session_id')
-    if (!sessionId) {
-      sessionId = `${Date.now()}-${Math.random().toString(36).substring(2)}`
-      localStorage.setItem('session_id', sessionId)
-    }
-    return sessionId
   }
 
   return (
@@ -163,8 +128,6 @@ export default function ParksPage() {
                   <ParkCard
                     key={park.id}
                     park={park}
-                    onSave={handleSavePark}
-                    saved={savedParks.has(park.id)}
                   />
                 ))}
               </div>

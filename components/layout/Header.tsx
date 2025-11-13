@@ -4,12 +4,14 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/button'
-import { Menu, Search, Calculator, MapPin, X } from 'lucide-react'
+import { Menu, Search, Calculator, MapPin, X, Bookmark } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { useSavedParks } from '@/hooks/useSavedParks'
 
 const navigation = [
   { name: 'Find Parks', href: '/parks' },
   { name: 'Compare', href: '/parks/compare' },
+  { name: 'Saved', href: '/parks/saved' },
   { name: 'Budget Calculator', href: '/tools/budget-calculator' },
   { name: 'True Cost', href: '/tools/true-cost' },
   { name: 'Valuation', href: '/tools/valuation' },
@@ -18,6 +20,7 @@ const navigation = [
 export function Header() {
   const pathname = usePathname()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const { count } = useSavedParks()
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
@@ -35,18 +38,24 @@ export function Header() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex md:items-center md:space-x-8">
-            {navigation.slice(0, 2).map((item) => (
+            {navigation.slice(0, 3).map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
                 className={cn(
-                  "text-sm font-medium transition-colors hover:text-emerald-600",
+                  "text-sm font-medium transition-colors hover:text-emerald-600 flex items-center gap-1.5",
                   pathname === item.href
                     ? "text-emerald-600"
                     : "text-gray-700"
                 )}
               >
+                {item.name === 'Saved' && <Bookmark className="h-4 w-4" />}
                 {item.name}
+                {item.name === 'Saved' && count > 0 && (
+                  <span className="ml-1 inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold leading-none text-white bg-emerald-600 rounded-full">
+                    {count}
+                  </span>
+                )}
               </Link>
             ))}
             <div className="relative group">
@@ -57,7 +66,7 @@ export function Header() {
                 </svg>
               </button>
               <div className="absolute left-0 mt-2 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 bg-white rounded-lg shadow-lg border py-2">
-                {navigation.slice(2).map((item) => (
+                {navigation.slice(3).map((item) => (
                   <Link
                     key={item.name}
                     href={item.href}
