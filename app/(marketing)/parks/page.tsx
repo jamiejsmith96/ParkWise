@@ -5,7 +5,9 @@ import { ParkCard } from '@/components/parks/ParkCard'
 import { ParkFilters } from '@/components/parks/ParkFilters'
 import { Button } from '@/components/ui/button'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Loader2 } from 'lucide-react'
+import { EmptyState } from '@/components/ui/empty-state'
+import { ErrorAlert, getErrorMessage } from '@/components/ui/error-alert'
+import { Loader2, SearchX, Database } from 'lucide-react'
 
 interface FilterState {
   region?: string
@@ -21,6 +23,7 @@ interface FilterState {
 export default function ParksPage() {
   const [parks, setParks] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   const [total, setTotal] = useState(0)
 
   const [filters, setFilters] = useState<FilterState>({
@@ -36,6 +39,7 @@ export default function ParksPage() {
 
   const fetchParks = async () => {
     setLoading(true)
+    setError(null)
     try {
       const params = new URLSearchParams({
         offset: (page * limit).toString(),
@@ -54,12 +58,20 @@ export default function ParksPage() {
       }
 
       const response = await fetch(`/api/parks?${params}`)
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch parks: ${response.statusText}`)
+      }
+
       const data = await response.json()
 
-      setParks(data.parks)
-      setTotal(data.total)
-    } catch (error) {
-      console.error('Failed to fetch parks:', error)
+      setParks(data.parks || [])
+      setTotal(data.total || 0)
+    } catch (err) {
+      console.error('Failed to fetch parks:', err)
+      setError(getErrorMessage(err))
+      setParks([])
+      setTotal(0)
     } finally {
       setLoading(false)
     }
@@ -90,28 +102,56 @@ export default function ParksPage() {
         {/* Parks Grid */}
         <div className="lg:col-span-3">
           {/* Sort and Results Count */}
-          <div className="flex items-center justify-between mb-6">
-            <p className="text-sm text-gray-600">
-              {loading ? 'Loading...' : `${total} parks found`}
-            </p>
+          {!error && (
+            <div className="flex items-center justify-between mb-6">
+              <p className="text-sm text-gray-600">
+                {loading ? 'Loading...' : `${total} parks found`}
+              </p>
 
-            <div className="flex items-center space-x-2">
-              <span className="text-sm text-gray-600">Sort by:</span>
-              <Select value={sortBy} onValueChange={setSortBy}>
-                <SelectTrigger className="w-40">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="name">Name (A-Z)</SelectItem>
-                  <SelectItem value="price">Price (Low-High)</SelectItem>
-                  <SelectItem value="rating">Rating</SelectItem>
-                  {filters.postcode && (
-                    <SelectItem value="distance">Distance</SelectItem>
-                  )}
-                </SelectContent>
-              </Select>
+              <div className="flex items-center space-x-2">
+                <span className="text-sm text-gray-600">Sort by:</span>
+                <Select value={sortBy} onValueChange={setSortBy}>
+                  <SelectTrigger className="w-40">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="name">Name (A-Z)</SelectItem>
+                    <SelectItem value="price">Price (Low-High)</SelectItem>
+                    <SelectItem value="rating">Rating</SelectItem>
+                    {filters.postcode && (
+                      <SelectItem value="distance">Distance</SelectItem>
+                    )}
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
-          </div>
+          )}
+
+          {/* Error State */}
+          {error && !loading && (
+            <div className="space-y-6">
+              <ErrorAlert
+                title="Unable to Load Parks"
+                message={error}
+                variant="error"
+                onRetry={fetchParks}
+              />
+
+              <EmptyState
+                icon={Database}
+                title="Database Not Configured"
+                description="The park database hasn't been set up yet. Please check the QUICK_START.md guide for instructions on configuring the database connection."
+                action={{
+                  label: 'View Setup Guide',
+                  href: '/guides/buyers-guide',
+                }}
+                secondaryAction={{
+                  label: 'Try Again',
+                  onClick: fetchParks,
+                }}
+              />
+            </div>
+          )}
 
           {/* Loading State */}
           {loading && (
@@ -121,7 +161,7 @@ export default function ParksPage() {
           )}
 
           {/* Parks Grid */}
-          {!loading && parks.length > 0 && (
+          {!loading && !error && parks.length > 0 && (
             <>
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                 {parks.map((park) => (
@@ -157,16 +197,24 @@ export default function ParksPage() {
             </>
           )}
 
-          {/* Empty State */}
-          {!loading && parks.length === 0 && (
-            <div className="text-center py-20">
-              <p className="text-lg text-gray-600 mb-4">
-                No parks found matching your criteria
-              </p>
-              <Button onClick={() => setFilters({ features: [] })}>
-                Clear Filters
-              </Button>
-            </div>
+          {/* Empty State - No Results */}
+          {!loading && !error && parks.length === 0 && (
+            <EmptyState
+              icon={SearchX}
+              title="No Parks Found"
+              description="We couldn't find any parks matching your search criteria. Try adjusting your filters or clearing them to see more results."
+              action={{
+                label: 'Clear All Filters',
+                onClick: () => setFilters({ features: [] }),
+              }}
+              secondaryAction={{
+                label: 'Browse All Parks',
+                onClick: () => {
+                  setFilters({ features: [] })
+                  setPage(0)
+                },
+              }}
+            />
           )}
         </div>
       </div>

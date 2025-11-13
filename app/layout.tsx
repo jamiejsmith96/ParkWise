@@ -4,6 +4,7 @@ import { Suspense } from "react"
 import { cn } from "@/lib/utils"
 import { Analytics } from "@/components/tracking/Analytics"
 import { StructuredData } from "@/components/seo/StructuredData"
+import { SkipLink } from "@/components/accessibility/SkipLink"
 import { generateMetadata, generateSchema } from "@/lib/seo"
 import Script from "next/script"
 
@@ -76,10 +77,13 @@ export default function RootLayout({
         )}
       </head>
       <body className="min-h-screen bg-gray-50 font-sans antialiased">
+        <SkipLink />
         <Suspense fallback={null}>
           <Analytics />
         </Suspense>
-        {children}
+        <main id="main-content">
+          {children}
+        </main>
       </body>
     </html>
   )

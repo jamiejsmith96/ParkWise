@@ -56,10 +56,110 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  /* Enhanced focus styles for accessibility */
+  :focus-visible {
+    @apply outline-none ring-2 ring-emerald-500 ring-offset-2;
+  }
+
+  /* Ensure all interactive elements are keyboard accessible */
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    @apply ring-2 ring-emerald-500 ring-offset-2;
+  }
 }
 
-/* Custom scrollbar for webkit browsers */
+/* Accessibility utilities */
 @layer utilities {
+  /* Screen reader only - visually hidden but accessible to screen readers */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  .not-sr-only {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+
+  /* Focus visible only (hide default outline, show on keyboard focus) */
+  .focus-visible-only:focus:not(:focus-visible) {
+    outline: none;
+    box-shadow: none;
+  }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    * {
+      border-width: 2px !important;
+    }
+  }
+
+  /* Mobile touch target optimization (WCAG 2.1 Level AAA: 44x44px) */
+  .touch-target {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .touch-target-sm {
+    min-width: 40px;
+    min-height: 40px;
+  }
+
+  .touch-target-lg {
+    min-width: 48px;
+    min-height: 48px;
+  }
+
+  /* Ensure proper spacing between touch targets */
+  @media (pointer: coarse) {
+    button,
+    a,
+    input[type="button"],
+    input[type="submit"],
+    [role="button"] {
+      min-height: 44px;
+      min-width: 44px;
+    }
+
+    /* Add spacing between adjacent interactive elements on mobile */
+    button + button,
+    a + a,
+    button + a,
+    a + button {
+      margin-left: 8px;
+    }
+  }
+
+  /* Custom scrollbar for webkit browsers */
   .scrollbar-thin::-webkit-scrollbar {
     width: 8px;
     height: 8px;
