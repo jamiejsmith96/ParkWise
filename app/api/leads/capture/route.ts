@@ -8,6 +8,7 @@ import {
   updateSession,
 } from '@/lib/supabase/queries'
 import { generateSessionId, parseUTMParams, getDeviceType, getBrowser } from '@/lib/utils'
+import { sendWelcomeEmail } from '@/lib/email'
 import type { LeadCaptureRequest } from '@/types'
 
 export const dynamic = 'force-dynamic'
@@ -136,6 +137,17 @@ export async function POST(request: NextRequest) {
         if (lead) {
           await updateLead(lead.id, updates)
           leadId = lead.id
+
+          // Send welcome email if we have first name
+          if (firstName && email) {
+            try {
+              await sendWelcomeEmail(email, firstName)
+              console.log(`Welcome email sent to ${email}`)
+            } catch (error) {
+              console.error('Failed to send welcome email:', error)
+              // Don't fail the request if email fails
+            }
+          }
 
           return NextResponse.json({
             success: true,
